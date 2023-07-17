@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rezervasyon Başarılı</title>
+</head>
+<body>
+    <h1>Rezervasyon Başarılı!</h1>
+    <p>Sayın {{ ogrenci_isim }} {{ ogrenci_soyisim }},</p>
+    <p>Rezervasyonunuz başarıyla tamamlandı. Aşağıdaki detaylarla birlikte rezervasyonunuz alındı:</p>
+    <ul>
+        <li><strong>Öğrenci Adı:</strong> {{ ogrenci_isim }} {{ ogrenci_soyisim }}</li>
+        <li><strong>Kurs Adı:</strong> {{ kurs_adi }}</li>
+        <li><strong>Açıklama:</strong> {{ aciklama }}</li>
+        <li><strong>Rezervasyon Tarihi:</strong> <span id="rezervasyon_tarih"></span></li>
+    </ul>
+    <p>Detaylı bilgiler için kurs yöneticisiyle iletişime geçebilirsiniz.</p>
+    <p>İyi günler dileriz!</p>
+
+    <script>
+        // Rezervasyon tarihini JavaScript ile al ve yerleştir
+        document.getElementById("rezervasyon_tarih").innerText = new Date().toLocaleString();
+    </script>
+</body>
+</html>
+
+{% endblock %}

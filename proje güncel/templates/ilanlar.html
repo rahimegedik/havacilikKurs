@@ -1,0 +1,30 @@
+{% extends 'admin_layout.html' %}
+
+{% block title %}İlanlar{% endblock %}
+
+{% block content %}
+    <h1>İlanlar</h1>
+    <a href="{{ url_for('kurs_ekle') }}">İlan Ekle</a>
+
+    <table>
+        <tr>
+            <th>Kurs İlan ID</th>
+            <th>Kurs Adı</th>
+            <th>Kurs Veren Okul</th>
+            <th>Kurs Açıklama</th>
+            <th>İşlemler</th>
+        </tr>
+        {% for ilan in ilanlar %}
+            <tr>
+                <td>{{ ilan.kurs_ilan_id }}</td>
+                <td>{{ ilan.kurs_adi }}</td>
+                <td>{{ ilan.kurs_veren_okul }}</td>
+                <td>{{ ilan.kurs_aciklama }}</td>
+                <td>
+                    <a href="{{ url_for('kurs_duzenle', kurs_ilan_id=ilan.kurs_ilan_id) }}">Düzenle</a>
+                    <a href="{{ url_for('kurs_sil', kurs_ilan_id=ilan.kurs_ilan_id) }}">Sil</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

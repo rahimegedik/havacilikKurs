@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kullanıcı Girişi</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>Kullanıcı Girişi</h2>
+        <form method="POST" action="{{ url_for('kullanici_giris') }}">
+            <label for="username">Kullanıcı Adı:</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="password">Şifre:</label>
+            <input type="password" id="password" name="password" required>
+
+            <button type="submit">Giriş Yap</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <h1>Kurs Detayı</h1>
+    <h2>{{ kurs.kurs_adi }}</h2>
+    <p>{{ kurs.kurs_aciklama }}</p>
+    <p>Kurs Veren Okul: {{ kurs.kurs_veren_okul }}</p>
+    <p>Kurs Admin Kullanıcı Adı: {{ kurs.kurs_admin_username }}</p>
+    <p>Kurs Tarihi: {{ kurs.kurs_tarih }}</p>
+    <p>Kurs Kontenjanı: {{ kurs.kurs_kontenjan }}</p>
+    <p>Kurs Fiyatı: {{ kurs.kurs_fiyat }}</p>
+    
+    <form action="/rezervasyon/{{ kurs.kurs_ilan_id }}" method="POST">
+        <label for="ogrenci_isim">Öğrenci İsim:</label>
+        <input type="text" id="ogrenci_isim" name="ogrenci_isim" required><br><br>
+        <label for="ogrenci_soyisim">Öğrenci Soyisim:</label>
+        <input type="text" id="ogrenci_soyisim" name="ogrenci_soyisim" required><br><br>
+        <label for="ogrenci_telefon">Öğrenci Telefon:</label>
+        <input type="text" id="ogrenci_telefon" name="ogrenci_telefon" required><br><br>
+        <label for="ogrenci_email">Öğrenci E-mail:</label>
+        <input type="email" id="ogrenci_email" name="ogrenci_email" required><br><br>
+        <input type="submit" value="Rezervasyon Yap">
+    </form>
+{% endblock %}

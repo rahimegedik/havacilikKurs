@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kurs İlanı Düzenle</title>
+</head>
+<body>
+    <h1>Kurs İlanı Düzenle</h1>
+    <form method="POST" action="/kurs_duzenle/{{ kurs.kurs_ilan_id }}">
+        <label for="kurs_adi">Kurs Adı:</label>
+        <input type="text" name="kurs_adi" value="{{ kurs.kurs_adi }}"><br><br>
+        <label for="kurs_veren_okul">Kurs Veren Okul:</label>
+        <input type="text" name="kurs_veren_okul" value="{{ kurs.kurs_veren_okul }}"><br><br>
+        <label for="kurs_admin_username">Kurs Admin Kullanıcı Adı:</label>
+        <input type="text" name="kurs_admin_username" value="{{ kurs.kurs_admin_username }}"><br><br>
+        <label for="kurs_aciklama">Kurs Açıklama:</label>
+        <input type="text" name="kurs_aciklama" value="{{ kurs.kurs_aciklama }}"><br><br>
+        <label for="kurs_tarih">Kurs Tarih:</label>
+        <input type="text" name="kurs_tarih" value="{{ kurs.kurs_tarih }}"><br><br>
+        <label for="kurs_kontenjan">Kurs Kontenjan:</label>
+        <input type="text" name="kurs_kontenjan" value="{{ kurs.kurs_kontenjan }}"><br><br>
+        <label for="kurs_fiyat">Kurs Fiyat:</label>
+        <input type="text" name="kurs_fiyat" value="{{ kurs.kurs_fiyat }}"><br><br>
+        <input type="submit" value="Kaydet">
+    </form>
+</body>
+</html>
+{% endblock %}

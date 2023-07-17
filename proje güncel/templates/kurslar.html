@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kurslar</title>
+</head>
+<body>
+    <h1>Kurslar</h1>
+    <ul>
+        {% for kurs in kurslar_ilan %}
+            {% if kurs.kurs_kontenjan > 0 %}
+                {% if kurs.kurs_kontenjan <= 3 %}
+                    <li>
+                        <a href="/kurs_detay/{{ kurs.kurs_ilan_id }}">{{ kurs.kurs_adi }}</a> (Kalan Kontenjan: {{ kurs.kurs_kontenjan }}) - Son {{ kurs.kurs_kontenjan }} kontenjan kaldı!
+                    </li>
+                {% elif kurs.kurs_kontenjan < 5 %}
+                    <li>
+                        <a href="/kurs_detay/{{ kurs.kurs_ilan_id }}">{{ kurs.kurs_adi }}</a> (Kalan Kontenjan: {{ kurs.kurs_kontenjan }}) - Son 5 kontenjan kaldı!
+                    </li>
+                {% else %}
+                    <li>
+                        <a href="/kurs_detay/{{ kurs.kurs_ilan_id }}">{{ kurs.kurs_adi }}</a> (Kalan Kontenjan: {{ kurs.kurs_kontenjan }})
+                    </li>
+                {% endif %}
+            {% else %}
+                <li>
+                    {{ kurs.kurs_adi }} (Kontenjan Dolu)
+                </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+</body>
+</html>
+{% endblock %}

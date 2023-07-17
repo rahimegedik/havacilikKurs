@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Kullanıcı Paneli - {{ username1 }} İlanları</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+   
+    <header>
+      
+    </header>
+
+    <div class="container">
+        <h2>{{ username1 }} İlanları</h2>
+        <a href="{{ url_for('kurs_ekle') }}">İlan Ekle</a>
+        <table>
+            <tr>
+                <th>Kurs Adı</th>
+                <th>Açıklama</th>
+                <th>Tarih</th>
+                <th>Kontenjan</th>
+                <th>Fiyat</th>
+                <th>İşlemler</th>
+            </tr>
+            {% for ilan in ilanlar %}
+                <tr>
+                    <td>{{ ilan.kurs_adi }}</td>
+                    <td>{{ ilan.aciklama }}</td>
+                    <td>{{ ilan.kurs_tarih }}</td>
+                    <td>{{ ilan.kurs_kontenjan }}</td>
+                    <td>{{ ilan.kurs_fiyat }}</td>
+                    <td>
+                        <a href="{{ url_for('kurs_duzenle', kurs_ilan_id=ilan.kurs_ilan_id) }}">Düzenle</a>
+                        <a href="{{ url_for('kurs_sil', kurs_ilan_id=ilan.kurs_ilan_id) }}">Sil</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+        <h2>Rezervasyonlar</h2>
+        <table>
+            <tr>
+                <th>Öğrenci İsim</th>
+                <th>Öğrenci Soyisim</th>
+                <th>Kurs Adı</th>
+                <th>Açıklama</th>
+                <th>Rezervasyon Tarih</th>
+            </tr>
+            {% for rezervasyon in rezervasyonlar %}
+                <tr>
+                    <td>{{ rezervasyon.ogrenci_isim }}</td>
+                    <td>{{ rezervasyon.ogrenci_soyisim }}</td>
+                    <td>{{ rezervasyon.kurs_adi }}</td>
+                    <td>{{ rezervasyon.kurs_aciklama }}</td>
+                    <td>{{ rezervasyon.rezervasyon_tarih }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <footer>
+        <p>Tüm hakları saklıdır. &copy; 2023 Havacılık Kursu</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,37 @@
+{% extends 'admin_layout.html' %}
+
+{% block title %}Admin Panel{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dersler</title>
+    
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>Dersler</h2>
+        <li><a href="{{ url_for('ders_ekle') }}">Ders Ekle</a></li>
+        <table>
+            <tr>
+                <th>Ders Adı</th>
+                <th>Açıklama</th>
+                <th>İşlemler</th>
+            </tr>
+            {% for ders in dersler %}
+                <tr>
+                    <td>{{ ders.kurs_adi }}</td>
+                    <td>{{ ders.kurs_aciklama }}</td>
+                    <td>
+                        <a href="{{ url_for('ders_duzenle', kurs_id=ders.kurs_id) }}">Düzenle</a>
+                        <a href="{{ url_for('ders_sil', kurs_id=ders.kurs_id) }}">Sil</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+</body>
+</html>
+{% endblock %}

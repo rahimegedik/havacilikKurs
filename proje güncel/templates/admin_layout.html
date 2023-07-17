@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>admin</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('index') }}">Ana Sayfa</a></li>
+                <li><a href="{{ url_for('ilanlar') }}">ilanlar</a></li>
+                <li><a href="{{ url_for('rezervasyonlar') }}">rezervasyonlar</a></li>
+                <li><a href="{{ url_for('admin_panel') }}">admin panel</a></li>
+                <li><a href="{{ url_for('kullanici_giris') }}"> kullanıcı giriş</a></li>
+                <li><a href="{{ url_for('kullanicilar') }}">Kullanıcılar</a></li>
+                <li><a href="{{ url_for('dersler') }}">dersler</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <footer>
+        <p>Tüm hakları saklıdır. &copy; 2023 Havacılık Kursu</p>
+    </footer>
+</body>
+</html>

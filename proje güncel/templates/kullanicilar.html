@@ -1,0 +1,41 @@
+{% extends 'admin_layout.html' %}
+
+{% block title %}İlanlar{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kullanıcılar</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+    </header>
+    
+    <div class="container">
+        <h2>Kullanıcılar</h2>
+        <a href="{{ url_for('kullanici_ekle') }}" class="button">Kullanıcı Ekle</a>
+        <table>
+            <tr>
+                <th>Kullanıcı Adı</th>
+                <th>İşlemler</th>
+            </tr>
+            {% for kullanici in kullanici_listesi %}
+                <tr>
+                    <td>{{ kullanici.kurs_admin_username }}</td>
+                    <td>
+                        <a href="{{ url_for('kullanici_duzenle', username=kullanici.kurs_admin_username) }}">Düzenle</a>
+                        <a href="{{ url_for('kullanici_sil', username=kullanici.kurs_admin_username) }}">Sil</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <footer>
+        <p>Tüm hakları saklıdır. &copy; 2023 Havacılık Kursu</p>
+    </footer>
+</body>
+</html>
+{% endblock %}

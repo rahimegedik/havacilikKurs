@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kullanıcı Düzenle</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('index') }}">Ana Sayfa</a></li>
+                <li><a href="{{ url_for('kurslar') }}">Kurslar</a></li>
+                <li><a href="{{ url_for('admin_panel') }}">Admin Paneli</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h2>Kullanıcı Düzenle</h2>
+        <form method="POST" action="{{ url_for('kullanici_duzenle', username=kullanici.kurs_admin_username) }}">
+            <label for="username">Kullanıcı Adı:</label>
+            <input type="text" id="username" name="kurs_admin_username" value="{{ kullanici.kurs_admin_username }}" required>
+            <label for="password">Parola:</label>
+            <input type="password" id="password" name="kurs_admin_password" required>
+            <input type="submit" value="Kaydet">
+        </form>
+    </div>
+
+    <footer>
+        <p>Tüm hakları saklıdır. &copy; 2023 Havacılık Kursu</p>
+    </footer>
+</body>
+</html>

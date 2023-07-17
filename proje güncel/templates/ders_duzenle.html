@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ders Düzenle</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>Ders Düzenle</h2>
+        <form method="POST" action="{{ url_for('ders_duzenle', kurs_id=kurs.kurs_id) }}">
+            <label for="kurs_adi">Ders Adı:</label>
+            <input type="text" id="kurs_adi" name="kurs_adi" value="{{ kurs.kurs_adi }}" required>
+
+            <label for="kurs_aciklama">Açıklama:</label>
+            <textarea id="kurs_aciklama" name="kurs_aciklama" required>{{ kurs.kurs_aciklama }}</textarea>
+
+            <button type="submit">Kaydet</button>
+        </form>
+    </div>
+</body>
+</html>

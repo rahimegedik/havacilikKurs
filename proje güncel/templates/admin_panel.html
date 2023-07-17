@@ -1,0 +1,87 @@
+{% extends 'admin_layout.html' %}
+
+{% block title %}Admin Panel{% endblock %}
+
+{% block content %}
+    <h1>Admin Panel</h1>
+    <li><a href="{{ url_for('ders_ekle') }}">Ders Ekle</a></li>
+    <h2>İlanlar</h2>
+    <a href="{{ url_for('kurs_ekle') }}">İlan Ekle</a>
+
+    <table>
+        <tr>
+            <th>Kurs İlan ID</th>
+            <th>Kurs Adı</th>
+            <th>Kurs Veren Okul</th>
+            <th>Kurs Admin Username</th>
+            <th>Kurs Açıklama</th>
+            <th>Kurs Tarih</th>
+            <th>Kurs Kontenjan</th>
+            <th>Kurs Fiyat</th>
+            <th>İşlemler</th>
+        </tr>
+        {% for ilan in ilanlar %}
+            <tr>
+                <td>{{ ilan.kurs_ilan_id }}</td>
+                <td>{{ ilan.kurs_adi }}</td>
+                <td>{{ ilan.kurs_veren_okul }}</td>
+                <td>{{ ilan.kurs_admin_username }}</td>
+                <td>{{ ilan.kurs_aciklama }}</td>
+                <td>{{ ilan.kurs_tarih }}</td>
+                <td>{{ ilan.kurs_kontenjan }}</td>
+                <td>{{ ilan.kurs_fiyat }}</td>
+                <td>
+                    <a href="{{ url_for('kurs_duzenle', kurs_ilan_id=ilan.kurs_ilan_id) }}">Düzenle</a>
+                    <a href="{{ url_for('kurs_sil', kurs_ilan_id=ilan.kurs_ilan_id) }}">Sil</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+    
+
+    <h2>Rezervasyonlar</h2>
+    
+
+    <table>
+        <tr>
+            <th>Rezervasyon ID</th>
+            <th>Rezervasyon Tarihi</th>
+            <th>Öğrenci İsim</th>
+            <th>Öğrenci Soyisim</th>
+            <th>Kurs İlan ID</th>
+            <th>İşlemler</th>
+        </tr>
+        {% for rezervasyon in rezervasyonlar %}
+            <tr>
+                <td>{{ rezervasyon.rezervasyon_id }}</td>
+                <td>{{ rezervasyon.rezervasyon_tarih }}</td>
+                <td>{{ rezervasyon.ogrenci_isim }}</td>
+                <td>{{ rezervasyon.ogrenci_soyisim }}</td>
+                <td>{{ rezervasyon.kurs_ilan_id }}</td>
+                <td>
+                    <a href="{{ url_for('rezervasyon_duzenle', rezervasyon_id=rezervasyon.rezervasyon_id) }}">Düzenle</a>
+                    <a href="{{ url_for('rezervasyon_sil', rezervasyon_id=rezervasyon.rezervasyon_id) }}">Sil</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    <h2>Kullanıcılar</h2>
+<table>
+    <tr>
+        <th>Kullanıcı Adı</th>
+        <th>İşlemler</th>
+    </tr>
+    {% for kullanici in kullanici_listesi %}
+        <tr>
+            <td>{{ kullanici.kurs_admin_username }}</td>
+            <td>
+                <a href="{{ url_for('kullanici_duzenle', username=kullanici.kurs_admin_username) }}">Düzenle</a>
+                <a href="{{ url_for('kullanici_sil', username=kullanici.kurs_admin_username) }}">Sil</a>
+            </td>
+        </tr>
+    {% endfor %}
+</table>
+<!-- Kullanıcı Ekle Butonu -->
+<a href="{{ url_for('kullanici_ekle') }}" class="button">Kullanıcı Ekle</a>
+{% endblock %}
