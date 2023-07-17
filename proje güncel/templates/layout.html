@@ -2,17 +2,83 @@
 <html>
 <head>
     <title>Havacılık Kursu</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/now-ui-kit@1.4.0/dist/css/now-ui-kit.css">
+    <style>
+        /* Ek stil düzenlemeleri buraya eklenebilir */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: left;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        nav ul li {
+            margin-left: 20px;
+        }
+
+        nav ul li:first-child {
+            margin-left: 0;
+            margin-right: auto;
+        }
+
+        nav ul li:last-child {
+            margin-right: 0;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav ul li a:hover,
+        nav ul li a:focus {
+            color: #fff;
+            text-decoration: none;
+            background-color: transparent;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
     <header>
         <nav>
             <ul>
-                <li><a href="{{ url_for('index') }}">Ana Sayfa</a></li>
-                <li><a href="{{ url_for('kurslar') }}">Kurslar</a></li>
-                <li><a href="{{ url_for('admin_login') }}">admin girişi</a></li>
-                <li><a href="{{ url_for('kullanici_giris') }}">Kullanıcı girişi</a></li>
-                
+                <li><a href="{{ url_for('index') }}" class="btn btn-link text-white">Ana Sayfa</a></li>
+                <li><a href="{{ url_for('kurslar') }}" class="btn btn-link text-white">Kurslar</a></li>
+                <li><a href="{{ url_for('admin_login') }}" class="btn btn-link text-white">Admin Girişi</a></li>
+                <li><a href="{{ url_for('kullanici_giris') }}" class="btn btn-link text-white">Kullanıcı Girişi</a></li>
             </ul>
         </nav>
     </header>
@@ -25,5 +91,10 @@
     <footer>
         <p>Tüm hakları saklıdır. &copy; 2023 Havacılık Kursu</p>
     </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/now-ui-kit@1.4.0/dist/js/now-ui-kit.min.js"></script>
 </body>
 </html>
