@@ -1,23 +1,148 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>admin</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="import" href="cssScriptDosyaları.html">
+    <style>
+        /* Ek stil düzenlemeleri buraya eklenebilir */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: left;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        nav ul li {
+            margin-left: 20px;
+        }
+
+        nav ul li:first-child {
+            margin-left: 0;
+            margin-right: auto;
+        }
+
+        nav ul li:last-child {
+            margin-right: 0;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+            flex: 1;
+            /* Occupy remaining space in the flex container */
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        /* Dropdown Styles */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .dropdown-content a {
+            color: #333;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+            opacity: 1;
+            pointer-events: auto;
+        }
+    </style>
 </head>
+
 <body>
     <header>
         <nav>
             <ul>
-                <li><a href="{{ url_for('index') }}">Ana Sayfa</a></li>
-                <li><a href="{{ url_for('ilanlar') }}">ilanlar</a></li>
-                <li><a href="{{ url_for('rezervasyonlar') }}">rezervasyonlar</a></li>
-                <li><a href="{{ url_for('admin_panel') }}">admin panel</a></li>
-                <li><a href="{{ url_for('kullanici_giris') }}"> kullanıcı giriş</a></li>
-                <li><a href="{{ url_for('kullanicilar') }}">Kullanıcılar</a></li>
-                <li><a href="{{ url_for('dersler') }}">dersler</a></li>
-            </ul>
+
+                <li><a href="{{ url_for('index') }}">Havacılık Kurs</a></li>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
+                    <li>
+                        <a class="dropdown-item" href="{{ url_for('admin_panel') }}">
+                            Admin Panel
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="{{ url_for('ilanlar') }}">
+                            İlanlar
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="{{ url_for('rezervasyonlar') }}">
+                            
+                            Rezervasyonlar
+                        </a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#">Admin Panel</a>
+                        <div class="dropdown-content">
+                            <a href="{{ url_for('admin_panel') }}">Admin Panel</a>
+                            <a href="{{ url_for('ilanlar') }}">İlanlar</a>
+                            <a href="{{ url_for('rezervasyonlar') }}">Rezervasyonlar</a>
+                            <a href="{{ url_for('kullanicilar') }}">Kullanıcılar</a>
+                            <a href="{{ url_for('dersler') }}">Dersler</a>
+                        </div>
+                    </li>
+
+                    <li><a href="{{ url_for('kullanici_giris') }}">Kullanıcı Giriş</a></li>
+                </ul>
         </nav>
     </header>
+
 
     <div class="container">
         {% block content %}
@@ -28,4 +153,5 @@
         <p>Tüm hakları saklıdır. &copy; 2023 Havacılık Kursu</p>
     </footer>
 </body>
+
 </html>
