@@ -3,20 +3,51 @@
 
 <head>
     <title>Havacılık Kursu</title>
-    <link rel="import" href="cssScriptDosyaları.html">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CSS only -->
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+        crossorigin="anonymous"></script>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+
+    <!-- Icons -->
+    <link href="./assets/css/nucleo-icons.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+
+    <!-- Theme CSS -->
+    <link type="text/css" href="./assets/css/soft-design-system-pro.min.css" rel="stylesheet">
+
     <style>
-        /* Ek stil düzenlemeleri buraya eklenebilir */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            flex: 1;
+            /* Allow the container to take up the remaining vertical space */
         }
 
         header {
-            background-color: #333;
+            background-color: #2d0d96;
             color: #fff;
             padding: 20px;
             text-align: left;
+            position: sticky;
+
+            top: 0;
+            z-index: 100;
         }
 
         nav ul {
@@ -60,15 +91,21 @@
         }
 
         footer {
-            background-color: #333;
+            background-color: #2d0d96;
             color: #fff;
-            padding: 20px;
+            padding: 10px;
             text-align: center;
-            position: fixed;
             bottom: 0;
             left: 0;
-            width: 100%;
+            z-index: 1;
         }
+
+        @media screen and (max-width: 768px) {
+            .col-md-4 {
+                flex: 0 0 100%;
+                /* Her cihazda tek sıra halinde düzenleme */
+                max-width: 100%;
+            }
     </style>
 </head>
 
@@ -76,13 +113,15 @@
     <header>
         <nav>
             <ul>
-                <li><a href="{{ url_for('index') }}" class="btn btn-link text-white">Ana Sayfa</a></li>
+                <li><a href="{{ url_for('index') }}" class="btn btn-link text-white">Havacılık Kurs</a></li>
                 <li><a href="{{ url_for('kurslar') }}" class="btn btn-link text-white">Kurslar</a></li>
                 <li><a href="{{ url_for('admin_login') }}" class="btn btn-link text-white">Admin Girişi</a></li>
                 <li><a href="{{ url_for('kullanici_giris') }}" class="btn btn-link text-white">Kullanıcı Girişi</a></li>
             </ul>
         </nav>
+
     </header>
+
 
     <div class="container">
         {% block content %}
@@ -92,11 +131,15 @@
     <footer>
         <p>Tüm hakları saklıdır. &copy; 2023 Havacılık Kursu</p>
     </footer>
+    <!-- Core -->
+    <script src="/assets/js/core/popper.min.js"></script>
+    <script src="/assets/js/core/bootstrap.min.js"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/now-ui-kit@1.4.0/dist/js/now-ui-kit.min.js"></script>
+    <!-- Theme JS -->
+    <script src="./assets/js/soft-design-system-pro.min.js" type="text/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>
