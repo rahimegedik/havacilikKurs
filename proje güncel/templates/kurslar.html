@@ -47,12 +47,12 @@
             margin-bottom: 10px;
         }
 
-        .framed-card .kurs-kontenjan {
+        .framed-card .kurs-konteyjan {
             font-size: 0.875rem;
             font-weight: bold;
         }
 
-        .framed-card .kontenjan-label {
+        .framed-card .konteyjan-label {
             font-size: 0.75rem;
             color: #6c757d;
         }
@@ -76,13 +76,6 @@
             /* Adjust the width and gap based on your requirement */
             max-width: 400px;
         }
-
-        @media screen and (max-width: 768px) {
-            .col-md-4 {
-                flex: 0 0 100%;
-                /* Her cihazda tek sıra halinde düzenleme */
-                max-width: 100%;
-            }
     </style>
 </head>
 
@@ -93,25 +86,27 @@
             {% for kurs in kurslar_ilan %}
             <div class="col-md-4">
                 <div class="framed-card">
-                    <a href="/kurs_detay/{{ kurs.kurs_ilan_id }}" class="card-link">
+                    {% if kurs.kurs_kontenjan > 0 %}
+                    <a href="/kurs_detay/{{ kurs.kurs_ilan_id }}" class="card-link" onclick="return true;">
+                    {% else %}
+                    <a href="#" class="card-link" onclick="alert('Konteyjan dolu!'); return false;">
+                    {% endif %}
                         <div class="card">
                             <div class="card-header">
                                 {{ kurs.kurs_adi }}
                             </div>
                             <div class="card-body">
-                                <span class="kontenjan-label">Konteyjan</span> {# Change "Kontenjan" to "Konteyjan" #}
+                                <span class="konteyjan-label">Konteyjan</span>
                                 {% if kurs.kurs_kontenjan > 0 %}
-                                {% if kurs.kurs_kontenjan <= 3 %} <span class="kurs-kontenjan text-danger">Son
-                                    <strong>{{ kurs.kurs_kontenjan }}</strong> konteyjan kaldı!</span> {# Change
-                                    "kontenjan" to "konteyjan" #}
-                                    {% elif kurs.kurs_kontenjan < 5 %} <span class="kurs-kontenjan text-warning">Son 5
-                                        konteyjan kaldı!</span> {# Change "kontenjan" to "konteyjan" #}
+                                {% if kurs.kurs_kontenjan <= 3 %} <span class="badge badge-danger">Son {{
+                                    kurs.kurs_kontenjan }} kontenjan kaldı!</span>
+                                    {% elif kurs.kurs_kontenjan < 5 %} <span class="badge badge-warning">Son 5 kontenjan
+                                        kaldı!</span>
                                         {% else %}
-                                        <span class="kurs-kontenjan text-success">{{ kurs.kurs_kontenjan }}</span>
+                                        {{ kurs.kurs_kontenjan }}
                                         {% endif %}
                                         {% else %}
-                                        <span class="kurs-kontenjan text-muted">Konteyjan Dolu</span> {# Change
-                                        "kontenjan" to "konteyjan" #}
+                                        <span class="badge badge-secondary">Dolu</span>
                                         {% endif %}
                             </div>
                         </div>
