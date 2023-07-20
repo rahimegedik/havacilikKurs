@@ -1,7 +1,8 @@
 from datetime import date
-from flask import Flask, render_template, redirect, request
+from flask import Flask, render_template, redirect, request, send_from_directory
 import pyodbc
-
+from werkzeug.utils import secure_filename
+import os
 app = Flask(__name__)
 
 # Veritabanı bağlantısı
@@ -13,6 +14,52 @@ connection_string = (
     r'Trusted_Connection=yes;'
 )
 connect = pyodbc.connect(connection_string)
+ALLOWED_EXTENSIONS = {'pdf', 'png', 'jpg', 'jpeg'}
+UPLOAD_FOLDER = 'C:\\Users\\erdem\\OneDrive\\Belgeler\\GitHub\\havacilikKurs\\proje güncel\\dekontlar'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+from flask import send_from_directory
+@app.route('/dekontlar')
+def dekontlar():
+    dekont_klasoru = app.config['UPLOAD_FOLDER']
+    dekont_dosyalari = []
+
+    for dosya_adi in os.listdir(dekont_klasoru):
+        if os.path.isfile(os.path.join(dekont_klasoru, dosya_adi)):
+            dekont_dosyalari.append(dosya_adi)
+
+    return render_template('dekontlar.html', dekont_dosyalari=dekont_dosyalari)
+
+@app.route('/dekontlar/goster/<path:dosya_adi>')
+def dekont_goster(dosya_adi):
+    dekont_klasoru = app.config['UPLOAD_FOLDER']
+    return send_from_directory(dekont_klasoru, dosya_adi)
+
+@app.route('/dekontlar/indir/<path:dosya_adi>')
+def dekont_indir(dosya_adi):
+    dekont_klasoru = app.config['UPLOAD_FOLDER']
+    return send_from_directory(dekont_klasoru, dosya_adi, as_attachment=True)
+
+# Kurs seçildiğinde ödeme sayfasına yönlendirme
+@app.route('/odeme/<int:kurs_ilan_id>', methods=['GET', 'POST'])
+def odeme(kurs_ilan_id):
+    if request.method == 'POST':
+        isim_soyisim = request.form.get('ogrenci_bilgileri')
+        
+        dekont = request.files['dekont']
+        if dekont and allowed_file(dekont.filename):
+            # Dosya adını kurs_ilan_id ve isim_soyisim ile birlikte kaydet
+            filename = secure_filename(f"{kurs_ilan_id}_{isim_soyisim}.{dekont.filename.rsplit('.', 1)[1].lower()}")
+            filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            dekont.save(filepath)
+
+        return redirect('/kurs_detay/' + str(kurs_ilan_id))
+    else:
+        return render_template('odeme.html', kurs_ilan_id=kurs_ilan_id)
+
+def allowed_file(filename):
+    ALLOWED_EXTENSIONS = {'pdf', 'jpg', 'jpeg', 'png'}  # Set the allowed file extensions
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 @app.route('/')
 def index():

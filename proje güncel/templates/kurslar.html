@@ -87,7 +87,7 @@
             <div class="col-md-4">
                 <div class="framed-card">
                     {% if kurs.kurs_kontenjan > 0 %}
-                    <a href="/kurs_detay/{{ kurs.kurs_ilan_id }}" class="card-link" onclick="return true;">
+                    <a href="/odeme/{{ kurs.kurs_ilan_id }}" class="card-link" onclick="return true;">
                     {% else %}
                     <a href="#" class="card-link" onclick="alert('Kontenjan dolu!'); return false;">
                     {% endif %}

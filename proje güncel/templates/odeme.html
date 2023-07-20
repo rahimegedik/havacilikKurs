@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ödeme Sayfası</title>
+</head>
+<body>
+    <h1>Ödeme Sayfası</h1>
+ <h3>
+        iban
+       </h3>
+       <h3>
+        TR72 0001 0023 4076 9952 3450 02
+
+       </h3>
+       <h3>Mert metin erdemli   </h3>
+       <form action="{{ url_for('odeme', kurs_ilan_id=kurs_ilan_id) }}" method="POST" enctype="multipart/form-data">
+        <label for="ogrenci_bilgileri">Öğrenci İsim ve Soyisim:</label>
+        <input type="text" id="ogrenci_bilgileri" name="ogrenci_bilgileri" required><br><br>
+        
+        <label for="dekont">Dekont Yükle:</label>
+        <input type="file" id="dekont" name="dekont" required accept=".pdf, .jpg, .jpeg, .png"><br><br>
+        
+        <input type="submit" value="Ödeme Yap">
+    </form>
+</body>
+</html>
