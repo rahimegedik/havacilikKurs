@@ -1,36 +1,9 @@
 from datetime import date
 from flask import Flask, render_template, redirect, request
 import pyodbc
-import smtplib
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
-
-# Gmail hesap bilgileri
-sender_email = '200101050@ogr.atu.edu.tr'  # E-posta gönderen hesap
-sender_password = 'Mert.007'  # E-posta gönderen hesap şifresi
-
-def send_email(receiver_email, subject, body):
-    # E-posta oluşturma
-    message = MIMEMultipart()
-    message['From'] = sender_email
-    message['To'] = receiver_email
-    message['Subject'] = subject
-
-    # E-posta içeriği
-    message.attach(MIMEText(body, 'plain'))
-
-    # SMTP sunucusuna bağlanma ve e-posta gönderme
-    try:
-        server = smtplib.SMTP('smtp.gmail.com', 587)
-        server.starttls()
-        server.login(sender_email, sender_password)
-        server.sendmail(sender_email, receiver_email, message.as_string())
-        server.quit()
-        print("E-posta başarıyla gönderildi.")
-    except Exception as e:
-        print("E-posta gönderirken bir hata oluştu:", str(e))
 
 app = Flask(__name__)
+
 # Veritabanı bağlantısı
 
 connection_string = (
@@ -43,8 +16,6 @@ connect = pyodbc.connect(connection_string)
 
 @app.route('/')
 def index():
-
-
     return render_template("index.html")
 
 @app.route('/kurslar')
@@ -297,27 +268,7 @@ def rezervasyon(kurs_ilan_id):
             connect.commit()
 
             cursor.close()
-            # E-posta gövdesi oluşturma
-            email_body = f"""
-            Merhaba {ogrenci_isim} {ogrenci_soyisim},
-            
-             { ilan.kurs_adi} için yapmış olduğunuz rezervasyon başarıyla tamamlandı.
-            İletişim bilgileriniz:
-            Telefon: {ogrenci_telefon}
-            E-posta: {ogrenci_email}
-            
-            İyi günler dileriz!
 
-            
-            rezervasyon tarihi : {rezervasyon_tarih}
-            Kurs ilan id : {kurs_ilan_id}
-            öğrenci id: {ogrenci_id}
-            """
-
-            # E-posta gönderme işlemi
-            send_email(ogrenci_email, "Rezervasyon Başarılı", email_body)
-
-            
             return render_template("rezervasyon_basarili.html", ogrenci_isim=ogrenci_isim, ogrenci_soyisim=ogrenci_soyisim,
                                    ogrenci_telefon=ogrenci_telefon, ogrenci_email=ogrenci_email,
                                    kurs_ilan_id=ilan.kurs_ilan_id, kurs_adi=ilan.kurs_adi, aciklama=ilan.kurs_aciklama)
@@ -328,8 +279,6 @@ def rezervasyon(kurs_ilan_id):
         return render_template("rezervasyon.html")
 
 
-
-    
 
 @app.route('/admin_login', methods=['GET', 'POST'])
 def admin_login():
@@ -462,28 +411,27 @@ def kullanicilar():
 @app.route('/kullanici_giris', methods=['GET', 'POST'])
 def kullanici_giris():
     if request.method == 'POST':
-        username1 = request.form.get('username')
+        username = request.form.get('username')
         password = request.form.get('password')
 
         # Kullanıcı adı ve şifreyi kontrol et
         cursor = connect.cursor()
-        cursor.execute("SELECT * FROM kurs_admin WHERE kurs_admin_username = ? AND kurs_admin_password = ?", (username1, password))
+        cursor.execute("SELECT * FROM kurs_admin WHERE kurs_admin_username = ? AND kurs_admin_password = ?", (username, password))
         kullanici = cursor.fetchone()
         cursor.close()
 
         if kullanici:
-            return redirect('/kullanici_panel?username=' + username1)
+            
+            return redirect('/kullanici_panel')
         else:
             return "<script>alert('Geçersiz kullanıcı adı veya şifre.');</script>"
     else:
         return render_template('kullanici_giris.html')
-
 @app.route('/kullanici_panel')
 def kullanici_panel():
     # Kullanıcının ilanlarını getir
-    username1 = request.args.get('username')
     cursor = connect.cursor()
-    cursor.execute("SELECT * FROM kurslar_ilan WHERE kurs_admin_username = ?", (username1,))
+    cursor.execute("SELECT * FROM kurslar_ilan WHERE kurs_admin_username = ?", ("admin",))
     ilanlar = cursor.fetchall()
 
     # Kullanıcının rezervasyonlarını getir
@@ -493,14 +441,13 @@ def kullanici_panel():
         INNER JOIN ogrenci o ON r.ogrenci_id = o.ogrenci_id
         INNER JOIN kurslar_ilan k ON r.kurs_ilan_id = k.kurs_ilan_id
         WHERE k.kurs_admin_username = ?
-    """, (username1,))
+    """, ("admin",))
 
     rezervasyonlar = cursor.fetchall()
 
     cursor.close()
 
-    return render_template('kullanici_panel.html', ilanlar=ilanlar, rezervasyonlar=rezervasyonlar, username1=username1)
-
+    return render_template('kullanici_panel.html', ilanlar=ilanlar, rezervasyonlar=rezervasyonlar, username="admin")
 @app.route('/ders_ekle', methods=['GET', 'POST'])
 def ders_ekle():
     if request.method == 'POST':

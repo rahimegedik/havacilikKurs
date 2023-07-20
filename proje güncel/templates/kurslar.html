@@ -47,12 +47,12 @@
             margin-bottom: 10px;
         }
 
-        .framed-card .kurs-konteyjan {
+        .framed-card .kurs-kontenjan {
             font-size: 0.875rem;
             font-weight: bold;
         }
 
-        .framed-card .konteyjan-label {
+        .framed-card .kontenjan-label {
             font-size: 0.75rem;
             color: #6c757d;
         }
@@ -89,14 +89,14 @@
                     {% if kurs.kurs_kontenjan > 0 %}
                     <a href="/kurs_detay/{{ kurs.kurs_ilan_id }}" class="card-link" onclick="return true;">
                     {% else %}
-                    <a href="#" class="card-link" onclick="alert('Konteyjan dolu!'); return false;">
+                    <a href="#" class="card-link" onclick="alert('Kontenjan dolu!'); return false;">
                     {% endif %}
                         <div class="card">
                             <div class="card-header">
                                 {{ kurs.kurs_adi }}
                             </div>
                             <div class="card-body">
-                                <span class="konteyjan-label">Konteyjan</span>
+                                <span class="kontenjan-label">Kontenjan</span>
                                 {% if kurs.kurs_kontenjan > 0 %}
                                 {% if kurs.kurs_kontenjan <= 3 %} <span class="badge badge-danger">Son {{
                                     kurs.kurs_kontenjan }} kontenjan kaldı!</span>
