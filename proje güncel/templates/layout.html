@@ -107,6 +107,38 @@
                 max-width: 100%;
             }
     </style>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            /* Add some space at the bottom to make sure the link is always visible */
+            padding-bottom: 70px;
+        }
+
+        .whatsapp-link {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            display: flex;
+            align-items: center;
+            background-color: #25D366;
+            padding: 10px;
+            border-radius: 10px;
+            color: white;
+            text-decoration: none;
+        }
+
+        .whatsapp-icon {
+            margin-right: 10px;
+        }
+
+        /* Style the <h3> inside the link */
+        .whatsapp-link h3 {
+            margin: 0;
+        }
+    </style>
 </head>
 
 <body>
@@ -129,15 +161,13 @@
     </div>
 
     <footer>
-        <div>
+        <div class="whatsapp-link">
         <a href="https://api.whatsapp.com/send?phone=905070093895" target="_blank" rel="noopener noreferrer"
-            style="color: white;">
-            <img  align="left" src="https://cdn-icons-png.flaticon.com/128/3536/3536445.png" alt="" height="50" width="50">
-            </a>
-               
-            </div>
-            </a>
-            
+           style="color: white;">
+            <img class="whatsapp-icon" src="https://cdn-icons-png.flaticon.com/128/3536/3536445.png" alt="" height="50" width="50">
+        </a>
+        <h3 style="color: white;">Bize Ulaşın</h3>
+    </div>
         <p>Tüm hakları saklıdır. &copy; 2023 Havacılık Kursu</p>
     </footer>
     <!-- Core -->
