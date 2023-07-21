@@ -6,15 +6,16 @@ import os
 app = Flask(__name__)
 
 # Veritabanı bağlantısı
-server = 'LAPTOP-NLQCE4VK'
-database = 'havacılık_kurs_proje'
-username = 'admin'
-password = 'admin'
-connection_string1 = f'DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={server};DATABASE={database};UID={username};PWD={password}'
-connect = pyodbc.connect(connection_string1)
-ALLOWED_EXTENSIONS = {'pdf', 'png', 'jpg', 'jpeg'}
-UPLOAD_FOLDER = 'C:\\Users\\erdem\\OneDrive\\Belgeler\\GitHub\\havacilikKurs\\proje güncel\\dekontlar'
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+# Veritabanı bağlantısı
+
+connection_string = (
+    r'DRIVER={SQL Server};'
+    r'SERVER=(local)\SQLEXPRESS;'  # YOUR SERVER NAME
+    r'DATABASE=proje;'  # YOUR DATABASE NAME
+    r'Trusted_Connection=yes;'
+)
+connect = pyodbc.connect(connection_string)
+
 
 from flask import send_from_directory
 @app.route('/dekontlar')
