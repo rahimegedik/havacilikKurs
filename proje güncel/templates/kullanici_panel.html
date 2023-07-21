@@ -2,7 +2,7 @@
 <html>
 <head>
 
-    <title>Kullanıcı Paneli - {{ username1 }} İlanları</title>
+    <title>Kullanıcı Paneli - {{ username }} İlanları</title>
     
 </head>
 <body>
@@ -13,8 +13,8 @@
     </header>
 
     <div class="container">
-        <h2>{{ username1 }} İlanları</h2>
-        <a href="{{ url_for('kurs_ekle') }}">İlan Ekle</a>
+        <h2>{{ username }} İlanları</h2>
+        <a href="{{ url_for('kullanici_kurs_ekle') }}">İlan Ekle</a>
         <table>
             <tr>
                 <th>Kurs Adı</th>

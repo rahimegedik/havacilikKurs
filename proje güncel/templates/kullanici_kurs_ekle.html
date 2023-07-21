@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <h1>Kurs İlanı Ekle</h1>
+    <form method="POST" action="/kullanici_kurs_ekle">
+        <label for="kurs_adi">Kurs Adı:</label>
+        <select name="kurs_adi">
+            {% for kurs in kurslar %}
+                <option value="{{ kurs.kurs_adi }}">{{ kurs.kurs_adi }}</option>
+            {% endfor %}
+        </select><br><br>
+        <label for="kurs_veren_okul">Kurs Veren Okul:</label>
+        <input type="text" name="kurs_veren_okul"><br><br>
+        <label for="kurs_admin_username">Kurs Admin Kullanıcı Adı:</label>
+        <input type="text" name="kurs_admin_username"><br><br>
+        <label for="kurs_aciklama">Kurs Açıklama:</label>
+        <input type="text" name="kurs_aciklama"><br><br>
+        <label for="kurs_tarih">Kurs Tarih:</label>
+        <input type="text" name="kurs_tarih"><br><br>
+        <label for="kurs_kontenjan">Kurs Kontenjan:</label>
+        <input type="text" name="kurs_kontenjan"><br><br>
+        <label for="kurs_fiyat">Kurs Fiyat:</label>
+        <input type="text" name="kurs_fiyat"><br><br>
+        <input type="submit" value="Ekle">
+    </form>
+{% endblock %}
