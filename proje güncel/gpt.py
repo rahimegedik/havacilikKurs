@@ -1,21 +1,20 @@
 from datetime import date
-from flask import Flask, render_template, redirect, request, send_from_directory
+from flask import Flask, render_template, redirect, request, send_from_directory, session
 import pyodbc
 from werkzeug.utils import secure_filename
 import os
 app = Flask(__name__)
-
+app.secret_key = 'gizli_anahtar_123'
 # Veritabanı bağlantısı
-# Veritabanı bağlantısı
-
-connection_string = (
-    r'DRIVER={SQL Server};'
-    r'SERVER=(local)\SQLEXPRESS;'  # YOUR SERVER NAME
-    r'DATABASE=proje;'  # YOUR DATABASE NAME
-    r'Trusted_Connection=yes;'
-)
-connect = pyodbc.connect(connection_string)
-
+server = 'LAPTOP-NLQCE4VK'
+database = 'havacılık_kurs_proje'
+username = 'admin'
+password = 'admin'
+connection_string1 = f'DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={server};DATABASE={database};UID={username};PWD={password}'
+connect = pyodbc.connect(connection_string1)
+ALLOWED_EXTENSIONS = {'pdf', 'png', 'jpg', 'jpeg'}
+UPLOAD_FOLDER = 'C:\\Users\\erdem\\OneDrive\\Belgeler\\GitHub\\havacilikKurs\\proje güncel\\dekontlar'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 from flask import send_from_directory
 @app.route('/dekontlar')
@@ -79,7 +78,44 @@ def kurs_detay(kurs_ilan_id):
     kurs = cursor.fetchone()
     cursor.close()
     return render_template("kurs_detay.html", kurs=kurs)
-# Kurs ilanı ekleme
+# kullanıcı Kurs ilanı ekleme
+
+@app.route('/kullanici_kurs_ekle', methods=['GET', 'POST'])
+def kullanici_kurs_ekle():
+    if request.method == 'POST':
+        # Retrieve form data
+        kurs_adi = request.form.get('kurs_adi')
+        kurs_veren_okul = request.form.get('kurs_veren_okul')
+        kurs_aciklama = request.form.get('kurs_aciklama')
+        kurs_tarih = request.form.get('kurs_tarih')
+        kurs_kontenjan = request.form.get('kurs_kontenjan')
+        kurs_fiyat = request.form.get('kurs_fiyat')
+
+        # Oturumdaki kullanıcı adını çekin
+        kullanici_adi = session.get('kullanici_adi')
+
+        try:
+            cursor = connect.cursor()
+            cursor.execute("""
+                INSERT INTO kurslar_ilan (kurs_adi, kurs_veren_okul, kurs_admin_username, kurs_aciklama, kurs_tarih, kurs_kontenjan, kurs_fiyat)
+                VALUES (?, ?, ?, ?, ?, ?, ?)
+            """, (kurs_adi, kurs_veren_okul, kullanici_adi, kurs_aciklama, kurs_tarih, kurs_kontenjan, kurs_fiyat))
+
+            connect.commit()
+            cursor.close()
+
+            return redirect('/kullanici_panel/' + kullanici_adi)
+        except Exception as e:
+            print("Hata:", str(e))
+            return "<script>alert('Kurs eklenirken bir hata oluştu.');</script>"
+    else:
+        cursor = connect.cursor()
+        cursor.execute("SELECT kurs_adi FROM kurs")
+        kurslar = cursor.fetchall()
+        cursor.close()
+        return render_template("kullanici_kurs_ekle.html", kurslar=kurslar)
+
+
 @app.route('/kurs_ekle', methods=['GET', 'POST'])
 def kurs_ekle():
     if request.method == 'POST':
@@ -112,6 +148,7 @@ def kurs_ekle():
         kurslar = cursor.fetchall()
         cursor.close()
         return render_template("kurs_ekle.html", kurslar=kurslar)
+
 
 @app.route('/ilanlar')
 def ilanlar():
@@ -251,6 +288,32 @@ def kullanici_duzenle(username):
         return render_template("kullanici_duzenle.html", kullanici=kullanici)
 
 # Kurs ilanı silme
+@app.route('/kullanici_kurs_sil/<int:kurs_ilan_id>')
+def kullanici_kurs_sil(kurs_ilan_id):
+    try:
+        cursor = connect.cursor()
+
+        # İlgili kurs ilanını kontrol et
+        cursor.execute("SELECT * FROM kurslar_ilan WHERE kurs_ilan_id=?", (kurs_ilan_id,))
+        ilan = cursor.fetchone()
+
+        if ilan:
+            # İlgili rezervasyonları sil
+            cursor.execute("DELETE FROM rezervasyonlar WHERE kurs_ilan_id=?", (kurs_ilan_id,))
+            connect.commit()
+
+            # Kurs ilanını sil
+            cursor.execute("DELETE FROM kurslar_ilan WHERE kurs_ilan_id=?", (kurs_ilan_id,))
+            connect.commit()
+
+            cursor.close()
+
+            return redirect('/kullanici_panel')
+        else:
+            return "<script>alert('İlgili kurs ilanı bulunamadı.');</script>"
+    except Exception as e:
+        print("Hata:", str(e))
+        return "<script>alert('Kurs ilanı silme sırasında bir hata oluştu.');</script>"
 @app.route('/kurs_sil/<int:kurs_ilan_id>')
 def kurs_sil(kurs_ilan_id):
     try:
@@ -454,6 +517,8 @@ def rezervasyon_duzenle(rezervasyon_id):
         rezervasyon = cursor.fetchone()
         cursor.close()
         return render_template("rezervasyon_duzenle.html", rezervasyon=rezervasyon)
+    
+
 @app.route('/kullanicilar')
 def kullanicilar():
     cursor = connect.cursor()
@@ -464,27 +529,31 @@ def kullanicilar():
 @app.route('/kullanici_giris', methods=['GET', 'POST'])
 def kullanici_giris():
     if request.method == 'POST':
-        username = request.form.get('username')
+        kullanici_adi = request.form.get('username')
         password = request.form.get('password')
 
         # Kullanıcı adı ve şifreyi kontrol et
         cursor = connect.cursor()
-        cursor.execute("SELECT * FROM kurs_admin WHERE kurs_admin_username = ? AND kurs_admin_password = ?", (username, password))
+        cursor.execute("SELECT * FROM kurs_admin WHERE kurs_admin_username = ? AND kurs_admin_password = ?", (kullanici_adi, password))
         kullanici = cursor.fetchone()
         cursor.close()
 
         if kullanici:
-            
-            return redirect('/kullanici_panel')
+            # Kullanıcı girişi başarılı olduğunda kullanıcı adını oturumda saklayın
+            session['kullanici_adi'] = kullanici_adi
+
+            return redirect('/kullanici_panel/' + kullanici_adi)  # Kullanıcı adını URL'ye ekleyerek gönderiyoruz
         else:
             return "<script>alert('Geçersiz kullanıcı adı veya şifre.');</script>"
     else:
         return render_template('kullanici_giris.html')
-@app.route('/kullanici_panel')
-def kullanici_panel():
+    
+
+@app.route('/kullanici_panel/<string:kullanici_adi>')
+def kullanici_panel(kullanici_adi):
     # Kullanıcının ilanlarını getir
     cursor = connect.cursor()
-    cursor.execute("SELECT * FROM kurslar_ilan WHERE kurs_admin_username = ?", ("admin",))
+    cursor.execute("SELECT * FROM kurslar_ilan WHERE kurs_admin_username = ?", (kullanici_adi,))
     ilanlar = cursor.fetchall()
 
     # Kullanıcının rezervasyonlarını getir
@@ -494,13 +563,13 @@ def kullanici_panel():
         INNER JOIN ogrenci o ON r.ogrenci_id = o.ogrenci_id
         INNER JOIN kurslar_ilan k ON r.kurs_ilan_id = k.kurs_ilan_id
         WHERE k.kurs_admin_username = ?
-    """, ("admin",))
+    """, (kullanici_adi,))
 
     rezervasyonlar = cursor.fetchall()
 
     cursor.close()
 
-    return render_template('kullanici_panel.html', ilanlar=ilanlar, rezervasyonlar=rezervasyonlar, username="admin")
+    return render_template('kullanici_panel.html', ilanlar=ilanlar, rezervasyonlar=rezervasyonlar, kullanici_adi=kullanici_adi)
 @app.route('/ders_ekle', methods=['GET', 'POST'])
 def ders_ekle():
     if request.method == 'POST':
