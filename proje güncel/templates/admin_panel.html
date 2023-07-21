@@ -1,7 +1,5 @@
 {% extends 'admin_layout.html' %}
 
-{% block title %}Admin Panel{% endblock %}
-
 {% block content %}
 <h1>Admin Panel</h1>
 <h2>Filtreleme</h2>
@@ -26,8 +24,13 @@
                 <td>{{ ders.kurs_adi }}</td>
                 <td>{{ ders.kurs_aciklama }}</td>
                 <td>
-                    <a href="{{ url_for('ders_duzenle', kurs_id=ders.kurs_id) }}">Düzenle</a>
-                    <a href="{{ url_for('ders_sil', kurs_id=ders.kurs_id) }}">Sil</a>
+                    <div class="btn-group">
+                        <a href="{{ url_for('ders_duzenle', kurs_id=ders.kurs_id) }}"
+                            class="btn btn-sm btn-warning">Düzenle</a>
+                        <a href="{{ url_for('ders_sil', kurs_id=ders.kurs_id) }}"
+                            class="btn btn-sm btn-danger">Sil</a>
+                    </div>
+                    
                 </td>
             </tr>
         {% endfor %}
@@ -72,8 +75,6 @@
                     </div>
                 </td>
             </tr>
-
-
             {% endfor %}
         </tbody>
     </table>

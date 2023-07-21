@@ -24,6 +24,7 @@
     <!-- Theme CSS -->
     <link type="text/css" href="./assets/css/soft-design-system-pro.min.css" rel="stylesheet">
 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -113,12 +114,13 @@
     <header>
         <nav>
             <ul>
-                <li><a href="{{ url_for('index') }}" class="btn btn-link text-white">Havacılık Kurs</a></li>
-                <li><a href="{{ url_for('kurslar') }}" class="btn btn-link text-white">Kurslar</a></li>
-                <li><a href="{{ url_for('admin_login') }}" class="btn btn-link text-white">Admin Girişi</a></li>
-                <li><a href="{{ url_for('kullanici_giris') }}" class="btn btn-link text-white">Kullanıcı Girişi</a></li>
+                <li><a href="{{ url_for('index') }}" class="text-white">Havacılık Kurs</a></li>
+                <li><a href="{{ url_for('kurslar') }}" class="text-white">Kurslar</a></li>
+                <li><a href="{{ url_for('admin_login') }}" class="text-white">Admin Girişi</a></li>
+                <li><a href="{{ url_for('kullanici_giris') }}" class="text-white">Kullanıcı Girişi</a></li>
             </ul>
         </nav>
+
 
     </header>
 
@@ -130,12 +132,12 @@
 
     <footer>
         <div>
-        <a href="https://api.whatsapp.com/send?phone=905070093895" target="_blank" rel="noopener noreferrer"
-            style="color: white;">
-            <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+            <a href="https://api.whatsapp.com/send?phone=905070093895" target="_blank" rel="noopener noreferrer"
+                style="color: white;">
+                <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+            </a>
+        </div>
         </a>
-    </div>
-    </a>
         <p>Tüm hakları saklıdır. &copy; 2023 Havacılık Kursu</p>
     </footer>
     <!-- Core -->
@@ -147,6 +149,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
         crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
