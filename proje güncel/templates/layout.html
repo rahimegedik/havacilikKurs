@@ -108,6 +108,38 @@
                 max-width: 100%;
             }
     </style>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            /* Add some space at the bottom to make sure the link is always visible */
+            padding-bottom: 70px;
+        }
+
+        .whatsapp-link {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            display: flex;
+            align-items: center;
+            background-color: #25D366;
+            padding: 10px;
+            border-radius: 10px;
+            color: white;
+            text-decoration: none;
+        }
+
+        .whatsapp-icon {
+            margin-right: 10px;
+        }
+
+        /* Style the <h3> inside the link */
+        .whatsapp-link h3 {
+            margin: 0;
+        }
+    </style>
 </head>
 
 <body>
@@ -131,13 +163,22 @@
     </div>
 
     <footer>
+        <a href="https://api.whatsapp.com/send?phone=905070093895" target="_blank" rel="noopener noreferrer" class="whatsapp-link">
         <div>
+<<<<<<< HEAD
             <a href="https://api.whatsapp.com/send?phone=905070093895" target="_blank" rel="noopener noreferrer"
                 style="color: white;">
                 <i class="fab fa-whatsapp"></i> Chat on WhatsApp
             </a>
         </div>
         </a>
+=======
+            <img class="whatsapp-icon" src="https://cdn-icons-png.flaticon.com/128/3536/3536445.png" alt="" height="50" width="50">
+            
+        </div>
+        <h3>Bize Ulaşın</h3>
+    </a>
+>>>>>>> 6d84c737e7b8924bc1efea045eed4cba5dffc919
         <p>Tüm hakları saklıdır. &copy; 2023 Havacılık Kursu</p>
     </footer>
     <!-- Core -->
