@@ -6,14 +6,12 @@ import os
 app = Flask(__name__)
 
 # Veritabanı bağlantısı
-
-connection_string = (
-    r'DRIVER={SQL Server};'
-    r'SERVER=(local)\SQLEXPRESS;'  # YOUR SERVER NAME
-    r'DATABASE=proje;'  # YOUR DATABASE NAME
-    r'Trusted_Connection=yes;'
-)
-connect = pyodbc.connect(connection_string)
+server = 'LAPTOP-NLQCE4VK'
+database = 'havacılık_kurs_proje'
+username = 'admin'
+password = 'admin'
+connection_string1 = f'DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={server};DATABASE={database};UID={username};PWD={password}'
+connect = pyodbc.connect(connection_string1)
 ALLOWED_EXTENSIONS = {'pdf', 'png', 'jpg', 'jpeg'}
 UPLOAD_FOLDER = 'C:\\Users\\erdem\\OneDrive\\Belgeler\\GitHub\\havacilikKurs\\proje güncel\\dekontlar'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -158,8 +156,15 @@ def kurs_duzenle(kurs_ilan_id):
         return render_template("kurs_duzenle.html", kurs=kurs)
 @app.route('/admin_panel')
 def admin_panel():
-    cursor = connect.cursor()
+    dekont_klasoru = app.config['UPLOAD_FOLDER']
+    dekont_dosyalari = []
 
+    for dosya_adi in os.listdir(dekont_klasoru):
+        if os.path.isfile(os.path.join(dekont_klasoru, dosya_adi)):
+            dekont_dosyalari.append(dosya_adi)
+    cursor = connect.cursor()
+    cursor.execute("SELECT * FROM kurs")
+    dersler = cursor.fetchall()
     # İlanları al
     cursor.execute("SELECT * FROM kurslar_ilan")
     ilanlar = cursor.fetchall()
@@ -178,7 +183,7 @@ def admin_panel():
 
     cursor.close()
 
-    return render_template("admin_panel.html", ilanlar=ilanlar, rezervasyonlar=rezervasyonlar, kullanici_listesi=kullanici_listesi)
+    return render_template("admin_panel.html",dekont_dosyalari=dekont_dosyalari,dersler=dersler, ilanlar=ilanlar, rezervasyonlar=rezervasyonlar, kullanici_listesi=kullanici_listesi)
 # Kullanıcı Ekle
 @app.route('/kullanici_ekle', methods=['GET', 'POST'])
 def kullanici_ekle():

@@ -1,6 +1,6 @@
 {% extends 'admin_layout.html' %}
 
-{% block title %}Admin Panel{% endblock %}
+{% block title %}Dekontlar{% endblock %}
 
 {% block content %}
 <!DOCTYPE html>
@@ -14,8 +14,8 @@
         {% for dosya in dekont_dosyalari %}
             <li>
                 <strong>{{ dosya }}</strong>
-                <a href="{{ url_for('dekont_goster', dosya_adi=dosya) }}">Görüntüle</a>
-                <a href="{{ url_for('dekont_indir', dosya_adi=dosya) }}" download>İndir</a>
+                <a target="_blank" href="{{ url_for('dekont_goster', dosya_adi=dosya) }}">Görüntüle</a>
+                <a target="_blank" href="{{ url_for('dekont_indir', dosya_adi=dosya) }}" download>İndir</a>
             </li>
         {% endfor %}
     </ul>

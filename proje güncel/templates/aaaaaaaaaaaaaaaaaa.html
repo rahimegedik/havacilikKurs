@@ -1,0 +1,48 @@
+<div class="table-responsive">
+    <table class="table table-bordered table-striped">
+        <thead class="thead-light">
+            <tr>
+                <th>Kullanıcı Adı</th>
+                <th>İşlemler</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for kullanici in kullanici_listesi %}
+            <tr>
+                <td>{{ kullanici.kurs_admin_username }}</td>
+                <td>
+                    <a href="{{ url_for('kullanici_duzenle', username=kullanici.kurs_admin_username) }}"
+                        class="btn btn-sm btn-warning">Düzenle</a>
+                    <a href="{{ url_for('kullanici_sil', username=kullanici.kurs_admin_username) }}"
+                        class="btn btn-sm btn-danger">Sil</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+<div class="table-responsive">
+    <h2>Dersler</h2>
+    <li><a href="{{ url_for('ders_ekle') }}">Ders Ekle</a></li>
+    <table class="table table-bordered table-striped">
+        <thead class="thead-light">
+            <tr>
+                <th>Ders Adı</th>
+                <th>Açıklama</th>
+                <th>İşlemler</th>
+            </tr>
+        </thead>
+        {% for ders in dersler %}
+            <tr>
+                <td>{{ ders.kurs_adi }}</td>
+                <td>{{ ders.kurs_aciklama }}</td>
+                <td>
+                    <a href="{{ url_for('ders_duzenle', kurs_id=ders.kurs_id) }}">Düzenle</a>
+                    <a href="{{ url_for('ders_sil', kurs_id=ders.kurs_id) }}">Sil</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
