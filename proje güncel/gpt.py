@@ -139,7 +139,7 @@ def kurs_duzenle(kurs_ilan_id):
             cursor = connect.cursor()
             cursor.execute("""
             UPDATE kurslar_ilan
-            SET kurs_adi=?, Kurs_veren_okul=?, kurs_admin_username=?, kurs_aciklama=?, kurs_tarih=?, kurs_kontenjan=?, kurs_fiyat=?
+            SET kurs_adi=?, kurs_veren_okul=?, kurs_admin_username=?, kurs_aciklama=?, kurs_tarih=?, kurs_kontenjan=?, kurs_fiyat=?
             WHERE kurs_ilan_id=?
             """, (kurs_adi, kurs_veren_okul, kurs_admin_username, kurs_aciklama, kurs_tarih, kurs_kontenjan, kurs_fiyat, kurs_ilan_id))
 
