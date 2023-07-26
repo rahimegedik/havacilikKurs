@@ -1,32 +1,78 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Kullanıcı Ekle</title>
-</head>
-<body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="{{ url_for('index') }}">Ana Sayfa</a></li>
-                <li><a href="{{ url_for('kurslar') }}">Kurslar</a></li>
-                <li><a href="{{ url_for('admin_panel') }}">Admin Paneli</a></li>
-            </ul>
-        </nav>
-    </header>
+{% extends 'admin_layout.html' %}
 
-    <div class="container">
-        <h2>Kullanıcı Ekle</h2>
-        <form method="POST" action="{{ url_for('kullanici_ekle') }}">
-            <label for="username">Kullanıcı Adı:</label>
-            <input type="text" id="username" name="kurs_admin_username" required>
-            <label for="password">Parola:</label>
-            <input type="password" id="password" name="kurs_admin_password" required>
-            <input type="submit" value="Ekle">
-        </form>
+{% block content %}
+<style>
+    .card {
+        max-width: 400px;
+        margin: 50px auto;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-header {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+    }
+
+    .card-title {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    .card-body {
+        padding: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        cursor: pointer;
+    }
+
+    .btn-primary:hover {
+        background-color: #0069d9;
+    }
+</style>
+<div class="container">
+    <div class="card">
+
+        <div class="card-header">
+            <h2 class="card-title">Kullanıcı Ekle</h2>
+        </div>
+        <div class="card-body">
+            <form method="POST" action="{{ url_for('kullanici_ekle') }}">
+                <div class="form-group">
+                    <label for="username">Kullanıcı Adı:</label>
+                    <input type="text" class="form-control" id="username" name="kurs_admin_username" required>
+                </div>
+                <div class="form-group">
+
+                    <label for="password">Parola:</label>
+                    <input type="password" class="form-control" id="password" name="kurs_admin_password" required>
+
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-warning">Ekle</button>
+                </div>
+            </form>
+        </div>
     </div>
-
-    <footer>
-        <p>Tüm hakları saklıdır. &copy; 2023 Havacılık Kursu</p>
-    </footer>
-</body>
-</html>
+</div>
+{% endblock %}

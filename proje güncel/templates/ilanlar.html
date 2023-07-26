@@ -3,28 +3,48 @@
 {% block title %}İlanlar{% endblock %}
 
 {% block content %}
-    <h1>İlanlar</h1>
-    <a href="{{ url_for('kurs_ekle') }}">İlan Ekle</a>
-
-    <table>
-        <tr>
-            <th>Kurs İlan ID</th>
-            <th>Kurs Adı</th>
-            <th>Kurs Veren Okul</th>
-            <th>Kurs Açıklama</th>
-            <th>İşlemler</th>
-        </tr>
-        {% for ilan in ilanlar %}
+<h2>İlanlar</h2>
+<a href="{{ url_for('kurs_ekle') }}" class="btn btn-primary">İlan Ekle</a>
+<br><br>
+<div class="table-responsive">
+    <table class="table table-bordered table-striped">
+        <thead class="thead-light">
+            <tr>
+                <th>Kurs İlan ID</th>
+                <th>Kurs Adı</th>
+                <th>Kurs Veren Okul</th>
+                <th>Kurs Admin Username</th>
+                <th>Kurs Açıklama</th>
+                <th>Kurs Tarih</th>
+                <th>Kurs Kontenjan</th>
+                <th>Kurs Fiyat</th>
+                <th>İşlemler</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ilan in ilanlar %}
             <tr>
                 <td>{{ ilan.kurs_ilan_id }}</td>
                 <td>{{ ilan.kurs_adi }}</td>
                 <td>{{ ilan.kurs_veren_okul }}</td>
+                <td>{{ ilan.kurs_admin_username }}</td>
                 <td>{{ ilan.kurs_aciklama }}</td>
+                <td>{{ ilan.kurs_tarih }}</td>
+                <td>{{ ilan.kurs_kontenjan }}</td>
+                <td>{{ ilan.kurs_fiyat }}</td>
                 <td>
-                    <a href="{{ url_for('kurs_duzenle', kurs_ilan_id=ilan.kurs_ilan_id) }}">Düzenle</a>
-                    <a href="{{ url_for('kurs_sil', kurs_ilan_id=ilan.kurs_ilan_id) }}">Sil</a>
+
+                    <div class="btn-group">
+                        <a href="{{ url_for('kurs_duzenle', kurs_ilan_id=ilan.kurs_ilan_id) }}"
+                            class="btn btn-sm btn-warning">Düzenle</a>
+                        <a href="{{ url_for('kurs_sil', kurs_ilan_id=ilan.kurs_ilan_id) }}"
+                            class="btn btn-sm btn-danger"
+                            onclick="return confirm('Bu ilanı silmek istediğinize emin misiniz?')">Sil</a>
+                    </div>
                 </td>
             </tr>
-        {% endfor %}
+            {% endfor %}
+        </tbody>
     </table>
+</div>
 {% endblock %}
