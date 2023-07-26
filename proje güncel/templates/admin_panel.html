@@ -4,8 +4,6 @@
 <h1>Admin Panel</h1>
 <h2>Filtreleme</h2>
 <input type="text" id="filterInput" placeholder="Arama yapın...">
-
-
 <div class="table-responsive">
     <h2>Dersler</h2>
     <a href="{{ url_for('ders_ekle') }}" class="btn btn-primary">Ders Ekle</a>
@@ -20,19 +18,18 @@
             </tr>
         </thead>
         {% for ders in dersler %}
-            <tr>
-                <td>{{ ders.kurs_adi }}</td>
-                <td>{{ ders.kurs_aciklama }}</td>
-                <td>
-                    <div class="btn-group">
-                        <a href="{{ url_for('ders_duzenle', kurs_id=ders.kurs_id) }}"
-                            class="btn btn-sm btn-warning">Düzenle</a>
-                        <a href="{{ url_for('ders_sil', kurs_id=ders.kurs_id) }}"
-                            class="btn btn-sm btn-danger">Sil</a>
-                    </div>
-                    
-                </td>
-            </tr>
+        <tr>
+            <td>{{ ders.kurs_adi }}</td>
+            <td>{{ ders.kurs_aciklama }}</td>
+            <td>
+                <div class="btn-group">
+                    <a href="{{ url_for('ders_duzenle', kurs_id=ders.kurs_id) }}"
+                        class="btn btn-sm btn-warning">Düzenle</a>
+                    <a href="{{ url_for('ders_sil', kurs_id=ders.kurs_id) }}" class="btn btn-sm btn-danger">Sil</a>
+                </div>
+
+            </td>
+        </tr>
         {% endfor %}
     </table>
 </div>
@@ -130,9 +127,9 @@
             <tr>
                 <td>{{ kullanici.kurs_admin_username }}</td>
                 <td>
-                    <a href="{{ url_for('kullanici_duzenle', username=kullanici.kurs_admin_username) }}"
+                    <a href="{{ url_for('kullanici_duzenle', kurs_admin_id=kullanici.kurs_admin_id) }}"
                         class="btn btn-sm btn-warning">Düzenle</a>
-                    <a href="{{ url_for('kullanici_sil', username=kullanici.kurs_admin_username) }}"
+                    <a href="{{ url_for('kullanici_sil', kurs_admin_id=kullanici.kurs_admin_id) }}"
                         class="btn btn-sm btn-danger">Sil</a>
                 </td>
             </tr>
@@ -143,37 +140,37 @@
 <h1>Dekontlar</h1>
 <ul>
     {% for dosya in dekont_dosyalari %}
-        <li>
-            <strong>{{ dosya }}</strong>
-            <a target="_blank" href="{{ url_for('dekont_goster', dosya_adi=dosya) }}">Görüntüle</a>
-            <a target="_blank" href="{{ url_for('dekont_indir', dosya_adi=dosya) }}" download>İndir</a>
-        </li>
+    <li>
+        <strong>{{ dosya }}</strong>
+        <a target="_blank" href="{{ url_for('dekont_goster', dosya_adi=dosya) }}">Görüntüle</a>
+        <a target="_blank" href="{{ url_for('dekont_indir', dosya_adi=dosya) }}" download>İndir</a>
+    </li>
     {% endfor %}
 </ul>
 <script>
     // Filtreleme işlemini gerçekleştiren JavaScript kodu
-    document.getElementById('filterInput').addEventListener('keyup', function() {
-      const filterValue = this.value.toLowerCase();
-      const rows = document.querySelectorAll('tbody tr'); // Tablo satırlarını seçiyoruz
-  
-      rows.forEach(row => {
-        const columns = row.querySelectorAll('td');
-        let matchFound = false;
-  
-        columns.forEach(column => {
-          const columnValue = column.textContent.toLowerCase();
-          if (columnValue.includes(filterValue)) {
-            matchFound = true;
-          }
+    document.getElementById('filterInput').addEventListener('keyup', function () {
+        const filterValue = this.value.toLowerCase();
+        const rows = document.querySelectorAll('tbody tr'); // Tablo satırlarını seçiyoruz
+
+        rows.forEach(row => {
+            const columns = row.querySelectorAll('td');
+            let matchFound = false;
+
+            columns.forEach(column => {
+                const columnValue = column.textContent.toLowerCase();
+                if (columnValue.includes(filterValue)) {
+                    matchFound = true;
+                }
+            });
+
+            if (matchFound) {
+                row.style.display = ''; // Eğer eşleşme varsa satırı görünür yap
+            } else {
+                row.style.display = 'none'; // Eğer eşleşme yoksa satırı gizle
+            }
         });
-  
-        if (matchFound) {
-          row.style.display = ''; // Eğer eşleşme varsa satırı görünür yap
-        } else {
-          row.style.display = 'none'; // Eğer eşleşme yoksa satırı gizle
-        }
-      });
     });
-  </script>
-  
+</script>
+
 {% endblock %}

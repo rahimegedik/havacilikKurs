@@ -23,10 +23,10 @@
             </tr>
             {% for kullanici in kullanici_listesi %}
                 <tr>
-                    <td>{{ kullanici.kurs_admin_username }}</td>
+                    <td>{{ kullanici.kurs_admin_id }}</td>
                     <td>
-                        <a href="{{ url_for('kullanici_duzenle', username=kullanici.kurs_admin_username) }}">Düzenle</a>
-                        <a href="{{ url_for('kullanici_sil', username=kullanici.kurs_admin_username) }}">Sil</a>
+                        <a href="{{ url_for('kullanici_duzenle', kurs_admin_id=kullanici.kurs_admin_id) }}">Düzenle</a>
+                        <a href="{{ url_for('kullanici_sil', kurs_admin_id=kullanici.kurs_admin_id) }}">Sil</a>
                     </td>
                 </tr>
             {% endfor %}
