@@ -1,30 +1,22 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Ödeme Sayfası</title>
-</head>
-<body>
-    <h1>Ödeme Sayfası</h1>
- <h3>
-        iban
-       </h3>
-       <h3>
-        TR72 0001 0023 4076 9952 3450 02
-
-       </h3>
-       <h3>Mert metin erdemli   </h3>
-       <form action="{{ url_for('odeme', kurs_ilan_id=kurs_ilan_id) }}" method="POST" enctype="multipart/form-data">
-        <label for="ogrenci_bilgileri">Öğrenci İsim ve Soyisim:</label>
-        <input type="text" id="ogrenci_bilgileri" name="ogrenci_bilgileri" required><br><br>
-        
-        <label for="dekont">Dekont Yükle:</label>
-        <input type="file" id="dekont" name="dekont" required accept=".pdf, .jpg, .jpeg, .png"><br><br>
-        
-        <input type="submit" value="Ödeme yapıldı">
+<div class="container py-5">
+    <h2 class="mb-3">Ödeme Sayfası</h2>
+    <div class="alert alert-primary" role="alert">
+        <h3 class="alert-heading">IBAN: TR72 0001 0023 4076 9952 3450 02</h3>
+        <p>Ad Soyad: Mert Metin Erdemli</p>
+    </div>
+    <form method="POST" action="{{ url_for('odeme', kurs_ilan_id=kurs_ilan_id) }}" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="ogrenci_bilgileri" class="form-label">Öğrenci İsim ve Soyisim:</label>
+            <input type="text" class="form-control" id="ogrenci_bilgileri" name="ogrenci_bilgileri" required>
+        </div>
+        <div class="mb-3">
+            <label for="dekont" class="form-label">Dekont Yükle:</label>
+            <input type="file" class="form-control" id="dekont" name="dekont" required accept=".pdf, .jpg, .jpeg, .png">
+        </div>
+        <button type="submit" class="btn btn-primary">Ödeme yapıldı</button>
     </form>
-</body>
-</html>
+</div>
 {% endblock %}
