@@ -98,9 +98,9 @@
                             <div class="card-body">
                                 <span class="kontenjan-label">Kontenjan</span>
                                 {% if kurs.kurs_kontenjan > 0 %}
-                                {% if kurs.kurs_kontenjan <= 3 %} <span class="badge badge-danger">Son {{
+                                {% if kurs.kurs_kontenjan <= 3 %} <span >Son {{
                                     kurs.kurs_kontenjan }} kontenjan kaldı!</span>
-                                    {% elif kurs.kurs_kontenjan < 5 %} <span class="badge badge-warning">Son 5 kontenjan
+                                    {% elif kurs.kurs_kontenjan < 5 %} <span >Son 5 kontenjan
                                         kaldı!</span>
                                         {% else %}
                                         {{ kurs.kurs_kontenjan }}

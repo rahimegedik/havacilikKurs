@@ -304,7 +304,7 @@ def kurs_sil(kurs_ilan_id):
 
             cursor.close()
 
-            return redirect('/ilanlar')
+            return redirect('/kurslar')
         else:
             return "<script>alert('İlgili kurs ilanı bulunamadı.');</script>"
     except Exception as e:
