@@ -19,17 +19,20 @@
         </thead>
         <tbody>
             {% for ilan in ilanlar %}
-                <tr>
-                    <td>{{ ilan.kurs_adi }}</td>
-                    <td>{{ ilan.aciklama }}</td>
-                    <td>{{ ilan.kurs_tarih }}</td>
-                    <td>{{ ilan.kurs_kontenjan }}</td>
-                    <td>{{ ilan.kurs_fiyat }}</td>
-                    <td>
-                        <a href="{{ url_for('kullanici_kurs_duzenle', kurs_ilan_id=ilan.kurs_ilan_id) }}" class="btn btn-warning btn-sm">Düzenle</a>
-                        <a href="{{ url_for('kullanici_kurs_sil', kurs_ilan_id=ilan.kurs_ilan_id) }}" class="btn btn-danger btn-sm">Sil</a>
-                    </td>
-                </tr>
+            <tr>
+                <td>{{ ilan.kurs_adi }}</td>
+                <td>{{ ilan.kurs_aciklama }}</td>
+                <td>{{ ilan.kurs_tarih }}</td>
+                <td>{{ ilan.kurs_kontenjan }}</td>
+                <td>{{ ilan.kurs_fiyat }}</td>
+                <td>
+                    <a href="{{ url_for('kullanici_kurs_duzenle', kurs_ilan_id=ilan.kurs_ilan_id) }}"
+                        class="btn btn-warning btn-sm">Düzenle</a>
+                    <a href="{{ url_for('kullanici_kurs_sil', kurs_ilan_id=ilan.kurs_ilan_id) }}"
+                        class="btn btn-danger btn-sm"
+                        onclick="return confirm('Bu dersi silmek istediğinize emin misiniz?')">Sil</a>
+                </td>
+            </tr>
             {% endfor %}
         </tbody>
     </table>
@@ -47,13 +50,13 @@
         </thead>
         <tbody>
             {% for rezervasyon in rezervasyonlar %}
-                <tr>
-                    <td>{{ rezervasyon.ogrenci_isim }}</td>
-                    <td>{{ rezervasyon.ogrenci_soyisim }}</td>
-                    <td>{{ rezervasyon.kurs_adi }}</td>
-                    <td>{{ rezervasyon.kurs_aciklama }}</td>
-                    <td>{{ rezervasyon.rezervasyon_tarih }}</td>
-                </tr>
+            <tr>
+                <td>{{ rezervasyon.ogrenci_isim }}</td>
+                <td>{{ rezervasyon.ogrenci_soyisim }}</td>
+                <td>{{ rezervasyon.kurs_adi }}</td>
+                <td>{{ rezervasyon.kurs_aciklama }}</td>
+                <td>{{ rezervasyon.rezervasyon_tarih }}</td>
+            </tr>
             {% endfor %}
         </tbody>
     </table>
