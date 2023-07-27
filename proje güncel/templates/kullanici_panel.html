@@ -26,9 +26,9 @@
                 <td>{{ ilan.kurs_kontenjan }}</td>
                 <td>{{ ilan.kurs_fiyat }}</td>
                 <td>
-                    <a href="{{ url_for('kullanici_kurs_duzenle', kurs_ilan_id=ilan.kurs_ilan_id) }}"
+                    <a href="{{ url_for('kurs_duzenle', kurs_ilan_id=ilan.kurs_ilan_id) }}"
                         class="btn btn-warning btn-sm">Düzenle</a>
-                    <a href="{{ url_for('kullanici_kurs_sil', kurs_ilan_id=ilan.kurs_ilan_id) }}"
+                    <a href="{{ url_for('kurs_sil', kurs_ilan_id=ilan.kurs_ilan_id) }}"
                         class="btn btn-danger btn-sm"
                         onclick="return confirm('Bu dersi silmek istediğinize emin misiniz?')">Sil</a>
                 </td>

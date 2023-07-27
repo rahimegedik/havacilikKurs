@@ -38,21 +38,6 @@ def dekont_indir(dosya_adi):
     return send_from_directory(dekont_klasoru, dosya_adi, as_attachment=True)
 
 # Kurs seçildiğinde ödeme sayfasına yönlendirme
-@app.route('/odeme/<int:kurs_ilan_id>', methods=['GET', 'POST'])
-def odeme(kurs_ilan_id):
-    if request.method == 'POST':
-        isim_soyisim = request.form.get('ogrenci_bilgileri')
-        
-        dekont = request.files['dekont']
-        if dekont and allowed_file(dekont.filename):
-            # Dosya adını kurs_ilan_id ve isim_soyisim ile birlikte kaydet
-            filename = secure_filename(f"{kurs_ilan_id}_{isim_soyisim}.{dekont.filename.rsplit('.', 1)[1].lower()}")
-            filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-            dekont.save(filepath)
-
-        return redirect('/kurs_detay/' + str(kurs_ilan_id))
-    else:
-        return render_template('odeme.html', kurs_ilan_id=kurs_ilan_id)
 
 def allowed_file(filename):
     ALLOWED_EXTENSIONS = {'pdf', 'jpg', 'jpeg', 'png'}  # Set the allowed file extensions
@@ -70,13 +55,7 @@ def kurslar():
     cursor.close()
     return render_template("kurslar.html", kurslar_ilan=kurslar_ilan)
 
-@app.route('/kurs_detay/<int:kurs_ilan_id>')
-def kurs_detay(kurs_ilan_id):
-    cursor = connect.cursor()
-    cursor.execute("SELECT * FROM kurslar_ilan WHERE kurs_ilan_id=?", (kurs_ilan_id,))
-    kurs = cursor.fetchone()
-    cursor.close()
-    return render_template("kurs_detay.html", kurs=kurs)
+
 # Kurs ilanı ekleme
 @app.route('/kurs_ekle', methods=['GET', 'POST'])
 def kurs_ekle():
@@ -332,20 +311,47 @@ def kurs_sil(kurs_ilan_id):
         print("Hata:", str(e))
         return "<script>alert('Kurs ilanı silme sırasında bir hata oluştu.');</script>"
 
+@app.route('/odeme/<int:kurs_ilan_id>', methods=['GET', 'POST'])
+def odeme(kurs_ilan_id):
+    if request.method == 'POST':
+        isim_soyisim = request.form.get('ogrenci_bilgileri')
+        
+        dekont = request.files['dekont']
+        if dekont and allowed_file(dekont.filename):
+            # Dosya adını kurs_ilan_id ve isim_soyisim ile birlikte kaydet
+            filename = secure_filename(f"{kurs_ilan_id}_{isim_soyisim}.{dekont.filename.rsplit('.', 1)[1].lower()}")
+            filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            dekont.save(filepath)
+
+        return redirect('/kurs_detay/' + str(kurs_ilan_id))
+    else:
+        return render_template('odeme.html', kurs_ilan_id=kurs_ilan_id)
+
+@app.route('/kurs_detay/<int:kurs_ilan_id>')
+def kurs_detay(kurs_ilan_id):
+    
+    cursor = connect.cursor()
+    cursor.execute("SELECT * FROM kurslar_ilan WHERE kurs_ilan_id=?", (kurs_ilan_id,))
+    kurs = cursor.fetchone()
+    cursor.close()
+
+    return render_template("kurs_detay.html", kurs=kurs)
 
 @app.route('/rezervasyon/<int:kurs_ilan_id>', methods=["GET", "POST"])
 def rezervasyon(kurs_ilan_id):
     if request.method == 'POST':
-        # Retrieve form data
-        ogrenci_isim = request.form.get('ogrenci_isim')
-        ogrenci_soyisim = request.form.get('ogrenci_soyisim')
-        ogrenci_telefon = request.form.get('ogrenci_telefon')
-        ogrenci_email = request.form.get('ogrenci_email')
-
+        
         try:
+            # Retrieve form data
+            ogrenci_isim = request.form.get('ogrenci_isim')
+            ogrenci_soyisim = request.form.get('ogrenci_soyisim')
+            ogrenci_telefon = request.form.get('ogrenci_telefon')
+            ogrenci_email = request.form.get('ogrenci_email')
+
             cursor = connect.cursor()
             cursor.execute("""
             INSERT INTO ogrenci (ogrenci_isim, ogrenci_soyisim, ogrenci_telefon_no, ogrenci_email)
+
             OUTPUT inserted.ogrenci_id
             VALUES (?, ?, ?, ?)
             """, (ogrenci_isim, ogrenci_soyisim, ogrenci_telefon, ogrenci_email))
@@ -605,6 +611,6 @@ def dersler():
     dersler = cursor.fetchall()
     cursor.close()
     return render_template("dersler.html", dersler=dersler)
+
 if __name__ == '__main__':
     app.run(debug=True, port=5000, host='0.0.0.0')
-#app.run(ssl_context=('cert1.pem', 'key1.pem'), threaded=True)
