@@ -82,6 +82,8 @@
 <body>
     <div class="container my-5">
         <h1 class="mb-4 text-center">Kurslar</h1>
+        <input type="text" id="searchInput" placeholder="Kurs adıyla ara...">
+        
         <div class="row">
             {% for kurs in kurslar_ilan %}
             <div class="col-md-4">
@@ -119,4 +121,30 @@
 </body>
 
 </html>
+<script>
+    // JavaScript function for filtering kurslar
+    function filterKurslar() {
+        var input, filter, cards, cardHeaders, i, txtValue;
+        input = document.getElementById('searchInput');
+        filter = input.value.toUpperCase();
+        cards = document.getElementsByClassName('framed-card');
+
+        for (i = 0; i < cards.length; i++) {
+            cardHeaders = cards[i].getElementsByClassName('card-header');
+            txtValue = cardHeaders[0].textContent || cardHeaders[0].innerText;
+
+            // Compare the kurs_adi with the search filter
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                cards[i].style.display = ''; // Show the card
+            } else {
+                cards[i].style.display = 'none'; // Hide the card
+            }
+        }
+    }
+
+    // Add event listener for the input field
+    document.getElementById('searchInput').addEventListener('input', filterKurslar);
+</script>
+
+
 {% endblock %}

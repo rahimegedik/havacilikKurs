@@ -57,7 +57,7 @@
             <h2 class="card-title">Kullanıcı Düzenle</h2>
         </div>
         <div class="card-body">
-            <form method="POST" action="{{ url_for('kullanici_duzenle', kurs_admin_id=kullanici.kurs_admin_id) }}">
+            <form method="POST" action="{{ url_for('kullanici_duzenle', username=kullanici.kurs_admin_username) }}">
                 <div class="form-group">
                     <label for="kurs_admin_username">Kullanıcı Adı:</label>
                     <input type="text" class="form-control" id="kurs_admin_username" name="kurs_admin_username" value="{{ kullanici.kurs_admin_username }}" required>

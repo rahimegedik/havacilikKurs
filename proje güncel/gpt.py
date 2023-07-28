@@ -199,6 +199,12 @@ def admin_panel():
     cursor = connect.cursor()
     cursor.execute("SELECT * FROM kurs")
     dersler = cursor.fetchall()
+    
+    
+    cursor.execute("SELECT * FROM ogrenci")
+    ogrenciler = cursor.fetchall()
+    
+
     # İlanları al
     cursor.execute("SELECT * FROM kurslar_ilan")
     ilanlar = cursor.fetchall()
@@ -217,7 +223,7 @@ def admin_panel():
 
     cursor.close()
 
-    return render_template("admin_panel.html",dekont_dosyalari=dekont_dosyalari,dersler=dersler, ilanlar=ilanlar, rezervasyonlar=rezervasyonlar, kullanici_listesi=kullanici_listesi)
+    return render_template("admin_panel.html",ogrenciler=ogrenciler,dekont_dosyalari=dekont_dosyalari,dersler=dersler, ilanlar=ilanlar, rezervasyonlar=rezervasyonlar, kullanici_listesi=kullanici_listesi)
 # Kullanıcı Ekle
 @app.route('/kullanici_ekle', methods=['GET', 'POST'])
 def kullanici_ekle():
@@ -254,6 +260,83 @@ def kullanici_sil(username):
     except Exception as e:
         print("Hata:", str(e))
         return "<script>alert('Kullanıcı silerken bir hata oluştu.');</script>"
+# Eski kodlarınızın devamı...
+@app.route('/ogrenciler')
+def ogrenciler():
+    cursor = connect.cursor()
+    cursor.execute("SELECT * FROM ogrenci")
+    ogrenciler = cursor.fetchall()
+    cursor.close()
+    return render_template("ogrenciler.html", ogrenciler=ogrenciler)
+# Eski kodlarınızın devamı...
+@app.route('/ogrenci_ekle', methods=['GET', 'POST'])
+def ogrenci_ekle():
+    if request.method == 'POST':
+        ogrenci_isim = request.form.get('ogrenci_isim')
+        ogrenci_soyisim = request.form.get('ogrenci_soyisim')
+        ogrenci_telefon = request.form.get('ogrenci_telefon')
+        ogrenci_email = request.form.get('ogrenci_email')
+
+        try:
+            cursor = connect.cursor()
+            cursor.execute("""
+            INSERT INTO ogrenci (ogrenci_isim, ogrenci_soyisim, ogrenci_telefon_no, ogrenci_email)
+            VALUES (?, ?, ?, ?)
+            """, (ogrenci_isim, ogrenci_soyisim, ogrenci_telefon, ogrenci_email))
+
+            connect.commit()
+            cursor.close()
+
+            return redirect('/ogrenciler')
+        except Exception as e:
+            print("Hata:", str(e))
+            return "<script>alert('Öğrenci eklenirken bir hata oluştu.');</script>"
+    else:
+        return render_template("ogrenci_ekle.html")
+
+@app.route('/ogrenci_duzenle/<int:ogrenci_id>', methods=['GET', 'POST'])
+def ogrenci_duzenle(ogrenci_id):
+    if request.method == 'POST':
+        ogrenci_isim = request.form.get('ogrenci_isim')
+        ogrenci_soyisim = request.form.get('ogrenci_soyisim')
+        ogrenci_telefon = request.form.get('ogrenci_telefon')
+        ogrenci_email = request.form.get('ogrenci_email')
+
+        try:
+            cursor = connect.cursor()
+            cursor.execute("""
+            UPDATE ogrenci
+            SET ogrenci_isim=?, ogrenci_soyisim=?, ogrenci_telefon_no=?, ogrenci_email=?
+            WHERE ogrenci_id=?
+            """, (ogrenci_isim, ogrenci_soyisim, ogrenci_telefon, ogrenci_email, ogrenci_id))
+
+            connect.commit()
+            cursor.close()
+
+            return redirect('/ogrenciler')
+        except Exception as e:
+            print("Hata:", str(e))
+            return "<script>alert('Öğrenci düzenlenirken bir hata oluştu.');</script>"
+    else:
+        cursor = connect.cursor()
+        cursor.execute("SELECT * FROM ogrenci WHERE ogrenci_id=?", (ogrenci_id,))
+        ogrenci = cursor.fetchone()
+        cursor.close()
+        return render_template("ogrenci_duzenle.html", ogrenci=ogrenci)
+
+@app.route('/ogrenci_sil/<int:ogrenci_id>')
+def ogrenci_sil(ogrenci_id):
+    try:
+        cursor = connect.cursor()
+        cursor.execute("DELETE FROM ogrenci WHERE ogrenci_id=?", (ogrenci_id,))
+
+        connect.commit()
+        cursor.close()
+
+        return redirect('/ogrenciler')
+    except Exception as e:
+        print("Hata:", str(e))
+        return "<script>alert('Öğrenci silme sırasında bir hata oluştu.');</script>"
 
 # Kullanıcı Düzenle
 @app.route('/kullanici_duzenle/<string:username>', methods=['GET', 'POST'])
